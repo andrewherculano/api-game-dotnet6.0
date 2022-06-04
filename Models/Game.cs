@@ -17,6 +17,6 @@ namespace GameApi.Models
         [Range(1, 1000, ErrorMessage = "Categoria inválida")]
         public int CategoryGameId { get; set; }
 
-        public CategoryGame CategoryGame { get; set; } = null!;
+        public CategoryGame? CategoryGame { get; set; }
     }
 }

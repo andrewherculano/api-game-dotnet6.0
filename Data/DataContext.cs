@@ -9,5 +9,6 @@ namespace GameApi.Data
             : base(options) { }
 
         public DbSet<CategoryGame> Categories { get; set; } = null!;
+        public DbSet<Game> Games { get; set; } = null!;
     }
 }
