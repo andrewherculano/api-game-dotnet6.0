@@ -10,5 +10,6 @@ namespace GameApi.Data
 
         public DbSet<CategoryGame> Categories { get; set; } = null!;
         public DbSet<Game> Games { get; set; } = null!;
+        public DbSet<User> Users { get; set; } = null!;
     }
 }
