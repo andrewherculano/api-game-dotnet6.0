@@ -1,5 +1,6 @@
 using GameApi.Data;
 using GameApi.Models;
+using GameApi.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,6 +10,26 @@ namespace GameApi.Controllers
     [Route("v1/users")]
     public class UserController : ControllerBase
     {
+        [HttpPost]
+        [Route("login")]
+        public async Task<ActionResult<dynamic>> Login([FromBody] User user, [FromServices] DataContext context)
+        {
+            var returnedUser = await context.Users
+                .Where(x => x.Username.ToLower() == user.Username.ToLower() && x.Password.ToLower() == user.Password.ToLower())
+                .FirstOrDefaultAsync();
+
+            if (returnedUser == null)
+                return NotFound(new { messageError = "Usuário não encontrado!" });
+
+            var token = TokenService.GenerateToken(returnedUser);
+
+            return new
+            {
+                user = returnedUser,
+                token = token
+            };
+        }
+
         [HttpGet]
         [Route("")]
         public async Task<ActionResult<List<User>>> GetAll([FromServices] DataContext context)
